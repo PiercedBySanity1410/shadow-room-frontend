@@ -81,6 +81,15 @@ export const ChatContainer: React.FC = () => {
   const [searchResults, setSearchResults] = useState<ChatUserContact[]>([]);
   const [debouncedQuery, setDebouncedQuery] = useState(searchQuery);
   const [isContactsLoaded, setIsContactsLoaded] = useState(false);
+  const [isMobile, setIsMobile] = useState(
+    typeof window !== "undefined" && window.innerWidth < 768
+  );
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   useEffect(() => {
     const handler = setTimeout(() => {
@@ -973,7 +982,6 @@ export const ChatContainer: React.FC = () => {
   }, [isContactsLoaded, setActiveChats, addActiveChat, updateChatStatus, incrementUnread]);
 
   const isChatSelected = location.pathname !== "/";
-  const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
   const shouldShowSidebar = isMobile ? !isChatSelected : true;
 
   const isSearching = searchQuery.length >= 2;
