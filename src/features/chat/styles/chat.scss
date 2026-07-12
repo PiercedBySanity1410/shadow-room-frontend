@@ -1,0 +1,715 @@
+// Variables
+$bg-dark-primary: #050507;
+$bg-dark-secondary: #0c0c0e;
+$bg-active-item: rgba(0, 255, 102, 0.08);
+$border-color: rgba(0, 255, 102, 0.12);
+$border-color-dim: rgba(255, 255, 255, 0.05);
+$text-white: #ffffff;
+$text-gray-light: #8a8f98;
+$text-gray-dark: #4e535a;
+$status-online: #00ff66;
+$unread-indicator: #00ff66;
+
+// Breakpoints
+$breakpoint-mobile: 768px;
+
+.chat-container {
+    width: 100%;
+    height: 100vh;
+    background: $bg-dark-primary;
+    overflow: hidden;
+    display: inline-flex;
+    justify-content: flex-start;
+    align-items: center;
+    font-family: 'Encode Sans Condensed', sans-serif;
+
+    // Sidebar Panel
+    .sidebar {
+        width: 400px;
+        align-self: stretch;
+        padding: 30px 20px;
+        background: $bg-dark-secondary;
+        overflow: hidden;
+        border-right: 1px solid $border-color;
+        display: inline-flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+        gap: 25px;
+        box-shadow: 5px 0 25px rgba(0, 0, 0, 0.5);
+
+        @media (max-width: $breakpoint-mobile) {
+            width: 100%;
+            padding: 20px;
+            border-right: none;
+        }
+
+        .top-actions {
+            align-self: stretch;
+            display: inline-flex;
+            justify-content: flex-start;
+            align-items: center;
+            gap: 12px;
+
+            .search-box {
+                flex: 1 1 0;
+                padding: 12px 15px;
+                background: rgba(0, 0, 0, 0.3);
+                border: 1px solid rgba(255, 255, 255, 0.08);
+                overflow: hidden;
+                border-radius: 12px;
+                display: flex;
+                justify-content: flex-start;
+                align-items: center;
+                gap: 10px;
+                color: $text-white;
+                font-size: 15px;
+                transition: all 0.3s ease;
+
+                svg {
+                    color: $text-gray-light;
+                    width: 18px;
+                    height: 18px;
+                }
+
+                &:focus-within {
+                    border-color: $status-online;
+                    box-shadow: 0 0 10px rgba(0, 255, 102, 0.15);
+
+                    svg {
+                        color: $status-online;
+                    }
+                }
+
+                input {
+                    width: 100%;
+                    height: 24px;
+                    font-size: 15px;
+                }
+            }
+
+            .action-btn {
+                width: 48px;
+                height: 48px;
+                background: rgba(0, 0, 0, 0.3);
+                border: 1px solid rgba(255, 255, 255, 0.08);
+                border-radius: 12px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                cursor: pointer;
+                color: $text-gray-light;
+                transition: all 0.3s ease;
+
+                &:hover {
+                    color: $status-online;
+                    border-color: $status-online;
+                    box-shadow: 0 0 10px rgba(0, 255, 102, 0.15);
+                }
+
+                svg {
+                    width: 20px;
+                    height: 20px;
+                }
+            }
+        }
+
+        .chats-list {
+            align-self: stretch;
+            flex: 1 1 0;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: flex-start;
+            gap: 6px;
+
+            @media (max-width: $breakpoint-mobile) {
+                height: auto;
+                max-height: calc(100vh - 200px);
+            }
+
+            .chat-item {
+                align-self: stretch;
+                padding: 12px 15px;
+                border-radius: 12px;
+                display: flex;
+                justify-content: flex-start;
+                align-items: center;
+                gap: 14px;
+                text-decoration: none;
+                color: inherit;
+                border: 1px solid transparent;
+                transition: all 0.2s ease;
+                min-width: 0;
+
+                &:hover {
+                    background: rgba(0, 255, 102, 0.03);
+                    border-color: rgba(0, 255, 102, 0.05);
+                }
+
+                &.active {
+                    background: $bg-active-item;
+                    border-color: $border-color;
+                    box-shadow: 0 0 15px rgba(0, 255, 102, 0.05);
+                }
+
+                .chat-details {
+                    width: 100%;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 4px;
+                    min-width: 0;
+
+                    .meta-row {
+                        align-self: stretch;
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        min-width: 0;
+                        gap: 8px;
+
+                        .name {
+                            color: $text-white;
+                            font-size: 15px;
+                            font-weight: 600;
+                            letter-spacing: 0.5px;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                            white-space: nowrap;
+                            flex-grow: 1;
+                            min-width: 0;
+                        }
+
+                        .time-container {
+                            display: flex;
+                            align-items: center;
+                            gap: 6px;
+                            flex-shrink: 0;
+                            white-space: nowrap;
+
+                            .unread-dot {
+                                width: 8px;
+                                height: 8px;
+                                background: $unread-indicator;
+                                border-radius: 50%;
+                                box-shadow: 0 0 8px $unread-indicator;
+                            }
+
+                            .time {
+                                color: $text-gray-light;
+                                font-family: 'Share Tech Mono', monospace;
+                                font-size: 11px;
+                            }
+                        }
+                    }
+
+                    .status-row-container {
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+                        gap: 8px;
+                        min-width: 0;
+
+                        .status-row {
+                            align-self: stretch;
+                            color: $text-gray-dark;
+                            font-size: 13px;
+                            font-family: 'Share Tech Mono', monospace;
+                            text-transform: none;
+                            letter-spacing: 0.5px;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                            white-space: nowrap;
+                            min-width: 0;
+                            flex: 1;
+                        }
+
+                        .unread-badge {
+                            flex-shrink: 0;
+                            min-width: 20px;
+                            height: 20px;
+                            padding: 0 6px;
+                            border-radius: 10px;
+                            background: $status-online;
+                            color: #000000;
+                            font-family: 'Share Tech Mono', monospace;
+                            font-size: 11px;
+                            font-weight: 700;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            box-shadow: 0 0 8px rgba(0, 255, 102, 0.3);
+                        }
+                    }
+
+                    .status-row {
+                        align-self: stretch;
+                        color: $text-gray-dark;
+                        font-size: 13px;
+                        font-family: 'Share Tech Mono', monospace;
+                        text-transform: none;
+                        letter-spacing: 0.5px;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
+                        min-width: 0;
+                    }
+                }
+            }
+        }
+
+        .empty-sidebar {
+            align-self: stretch;
+            flex: 1 1 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            text-align: center;
+            color: $text-gray-light;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 14px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            border: 1px dashed rgba(0, 255, 102, 0.1);
+            border-radius: 12px;
+            margin: 10px 0;
+        }
+    }
+
+    .avatar-container {
+        position: relative;
+        display: inline-flex;
+        flex-direction: column;
+
+        .avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .status-badge {
+            width: 10px;
+            height: 10px;
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            background: $status-online;
+            border-radius: 50%;
+            border: 2px solid $bg-dark-secondary;
+            box-shadow: 0 0 8px $status-online;
+        }
+    }
+
+    // Main Window Panel
+    .main-chat-window {
+        flex: 1 1 0;
+        align-self: stretch;
+        background: $bg-dark-primary;
+        overflow: hidden;
+        display: inline-flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        position: relative;
+
+        @media (max-width: $breakpoint-mobile) {
+            width: 100%;
+        }
+
+        // View: No Selected Chat
+        .no-chat-selected {
+            align-self: stretch;
+            flex: 1 1 0;
+            display: inline-flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+
+            .brand-wrapper {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 20px;
+
+                .logo {
+                    width: 70px;
+                    height: 90px;
+                    color: $status-online;
+                    filter: drop-shadow(0 0 15px rgba(0, 255, 102, 0.3));
+
+                    @media (max-width: $breakpoint-mobile) {
+                        width: 55px;
+                        height: 70px;
+                    }
+                }
+
+                .title {
+                    color: $status-online;
+                    font-family: 'Share Tech Mono', monospace;
+                    font-size: 22px;
+                    text-transform: uppercase;
+                    letter-spacing: 4px;
+                    text-shadow: 0 0 10px rgba(0, 255, 102, 0.4);
+
+                    @media (max-width: $breakpoint-mobile) {
+                        font-size: 16px;
+                    }
+                }
+            }
+        }
+
+        // View: Active Chat Flow
+        .chat-header {
+            align-self: stretch;
+            padding: 20px 30px;
+            display: inline-flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid $border-color-dim;
+            background: rgba(0, 0, 0, 0.15);
+
+            @media (max-width: $breakpoint-mobile) {
+                padding: 15px 12px;
+            }
+
+            .room-info {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+
+                .back-btn-mobile {
+                    display: none;
+                    background: transparent;
+                    border: none;
+                    color: $text-white;
+                    cursor: pointer;
+                    padding: 8px;
+                    margin-right: 4px;
+
+                    svg {
+                        width: 20px;
+                        height: 20px;
+                    }
+
+                    @media (max-width: $breakpoint-mobile) {
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                    }
+                }
+
+                .avatar-container .avatar {
+                    border: 1px solid rgba(0, 255, 102, 0.2);
+                }
+
+                .name {
+                    color: $text-white;
+                    font-size: 18px;
+                    font-weight: 600;
+                    letter-spacing: 0.5px;
+
+                    @media (max-width: $breakpoint-mobile) {
+                        font-size: 15px;
+                    }
+                }
+            }
+
+            .header-actions {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+
+                @media (max-width: $breakpoint-mobile) {
+                    gap: 5px;
+                }
+
+                .icon-btn {
+                    padding: 10px;
+                    background: rgba(255, 255, 255, 0.03);
+                    border: 1px solid rgba(255, 255, 255, 0.05);
+                    border-radius: 10px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    color: $text-gray-light;
+                    cursor: pointer;
+                    transition: all 0.2s ease;
+
+                    &:hover {
+                        color: $status-online;
+                        border-color: $status-online;
+                    }
+
+                    svg {
+                        width: 18px;
+                        height: 18px;
+                    }
+
+                    @media (max-width: $breakpoint-mobile) {
+                        padding: 8px;
+                        border-radius: 8px;
+
+                        svg {
+                            width: 16px;
+                            height: 16px;
+                        }
+                    }
+                }
+            }
+        }
+
+        .messages-scroller {
+            align-self: stretch;
+            flex: 1 1 0;
+            padding: 25px 30px 90px 30px;
+            position: relative;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            gap: 12px;
+
+            @media (max-width: $breakpoint-mobile) {
+                padding: 15px 12px 85px 12px;
+            }
+
+            .date-separator {
+                color: $status-online;
+                font-family: 'Share Tech Mono', monospace;
+                font-size: 12px;
+                letter-spacing: 2px;
+                text-transform: uppercase;
+                margin: 15px 0;
+                background: rgba(0, 255, 102, 0.05);
+                padding: 4px 10px;
+                border: 1px dashed rgba(0, 255, 102, 0.2);
+                border-radius: 4px;
+            }
+
+            // Unread messages separator (WhatsApp-style)
+            .unread-separator {
+                align-self: stretch;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin: 10px 0;
+
+                &::before,
+                &::after {
+                    content: '';
+                    flex: 1;
+                    height: 1px;
+                    background: rgba(0, 180, 255, 0.25);
+                }
+
+                .unread-separator-text {
+                    color: #00b4ff;
+                    font-family: 'Share Tech Mono', monospace;
+                    font-size: 11px;
+                    letter-spacing: 2px;
+                    text-transform: uppercase;
+                    padding: 3px 12px;
+                    background: rgba(0, 180, 255, 0.08);
+                    border: 1px solid rgba(0, 180, 255, 0.2);
+                    border-radius: 4px;
+                    white-space: nowrap;
+                }
+            }
+
+            .message-wrapper {
+                align-self: stretch;
+                display: inline-flex;
+                align-items: flex-end;
+                gap: 12px;
+
+                @media (max-width: $breakpoint-mobile) {
+                    gap: 8px;
+                }
+
+                &.incoming {
+                    justify-content: flex-start;
+
+                    .bubble {
+                        background: rgba(0, 255, 102, 0.02);
+                        border: 1px solid rgba(0, 255, 102, 0.15);
+                        border-radius: 12px 12px 12px 2px;
+                        color: #a3ffd0;
+                        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+
+                        .time-meta {
+                            color: $text-gray-dark;
+                        }
+                    }
+                }
+
+                &.outgoing {
+                    justify-content: flex-end;
+
+                    .bubble {
+                        background: rgba(255, 255, 255, 0.03);
+                        border: 1px solid rgba(255, 255, 255, 0.08);
+                        border-radius: 12px 12px 2px 12px;
+                        color: $text-white;
+
+                        .time-meta {
+                            color: $text-gray-light;
+                        }
+                    }
+                }
+
+                .msg-avatar {
+                    width: 22px;
+                    height: 22px;
+                    border-radius: 50%;
+                    border: 1px solid rgba(255, 255, 255, 0.1);
+
+                    @media (max-width: $breakpoint-mobile) {
+                        width: 18px;
+                        height: 18px;
+                    }
+                }
+
+                .bubble {
+                    max-width: 550px;
+                    padding: 12px 18px;
+                    display: inline-flex;
+                    flex-direction: column;
+                    justify-content: flex-end;
+                    align-items: flex-end;
+
+                    @media (max-width: $breakpoint-mobile) {
+                        max-width: 85%;
+                        padding: 10px 14px;
+                    }
+
+                    .text {
+                        width: 100%;
+                        font-size: 15px;
+                        line-height: 22px;
+                        font-weight: 400;
+                        word-wrap: break-word;
+
+                        @media (max-width: $breakpoint-mobile) {
+                            font-size: 14px;
+                            line-height: 20px;
+                        }
+                    }
+
+                    .time-meta {
+                        font-family: 'Share Tech Mono', monospace;
+                        font-size: 10px;
+                        margin-top: 6px;
+                        display: flex;
+                        align-items: center;
+                        gap: 5px;
+
+                        .status-ticks {
+                            height: 8.5px;
+                            color: rgba(255, 255, 255, 0.4);
+                            transition: color 0.2s ease;
+
+                            &.read {
+                                color: $status-online;
+                                filter: drop-shadow(0 0 2px rgba(0, 255, 98, 0.4));
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        .input-bar-container {
+            width: 100%;
+            padding: 20px 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+            bottom: 0;
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(5, 5, 7, 0.95) 70%);
+
+            @media (max-width: $breakpoint-mobile) {
+                padding: 12px;
+            }
+
+            .input-wrapper {
+                width: 100%;
+                max-width: 825px;
+                display: inline-flex;
+                justify-content: flex-start;
+                align-items: center;
+                gap: 15px;
+
+                @media (max-width: $breakpoint-mobile) {
+                    gap: 10px;
+                }
+
+                .text-input-field {
+                    flex: 1 1 0;
+                    padding: 14px 20px;
+                    background: rgba(0, 0, 0, 0.4);
+                    border: 1px solid rgba(255, 255, 255, 0.08);
+                    border-radius: 12px;
+                    outline: none;
+                    color: $text-white;
+                    font-size: 15px;
+                    transition: all 0.3s ease;
+
+                    &:focus {
+                        border-color: $status-online;
+                        box-shadow: 0 0 12px rgba(0, 255, 102, 0.12);
+                    }
+
+                    @media (max-width: $breakpoint-mobile) {
+                        padding: 12px 14px;
+                        font-size: 14px;
+                        border-radius: 10px;
+                    }
+
+                    &::placeholder {
+                        color: rgba(255, 255, 255, 0.3);
+                    }
+                }
+
+                .send-btn {
+                    width: 48px;
+                    height: 48px;
+                    background: $status-online;
+                    border-radius: 50%;
+                    display: inline-flex;
+                    justify-content: center;
+                    align-items: center;
+                    border: none;
+                    cursor: pointer;
+                    color: #000000;
+                    flex-shrink: 0;
+                    box-shadow: 0 0 10px rgba(0, 255, 102, 0.3);
+                    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+                    &:hover {
+                        transform: scale(1.06);
+                        box-shadow: 0 0 18px rgba(0, 255, 102, 0.5);
+                    }
+
+                    @media (max-width: $breakpoint-mobile) {
+                        width: 42px;
+                        height: 42px;
+                    }
+
+                    svg {
+                        width: 18px;
+                        height: 18px;
+                    }
+                }
+            }
+        }
+    }
+}

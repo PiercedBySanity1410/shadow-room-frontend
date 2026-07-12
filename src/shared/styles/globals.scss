@@ -1,0 +1,134 @@
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Encode+Sans+Condensed:wght@300;400;600&family=Inter:wght@400;500;600&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body,
+html {
+    width: 100%;
+    height: 100%;
+    font-family: "Inter", sans-serif;
+    background-color: #050505;
+    color: #fff;
+    overflow: hidden;
+}
+
+#root {
+    width: 100%;
+    height: 100%;
+    background-color: #050505;
+    font-family: "Encode Sans Condensed", sans-serif;
+    color: #fff;
+    position: relative;
+
+    // Faint tactical scanline terminal overlay
+    &::after {
+        content: " ";
+        display: block;
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+        z-index: 99999;
+        background-size: 100% 4px, 6px 100%;
+        pointer-events: none;
+        opacity: 0.15;
+    }
+}
+
+input {
+    background-color: transparent;
+    outline: none;
+    border: none;
+    font-family: "Encode Sans Condensed", sans-serif;
+    caret-color: #00ff66;
+    color: #ffffff;
+
+    &::placeholder {
+        font-family: "Encode Sans Condensed", sans-serif;
+        color: rgba(255, 255, 255, 0.4);
+    }
+}
+
+// Global Custom Scrollbar for classification terminals
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.2);
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(0, 255, 102, 0.15);
+    border-radius: 4px;
+    
+    &:hover {
+        background: rgba(0, 255, 102, 0.35);
+    }
+}
+
+.loading-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #050505;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s cubic-bezier(0.19, 1, 0.22, 1), visibility 0.5s ease;
+    gap: 15px;
+    z-index: 9999;
+
+    &.active {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .logo-wrapper {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 25px;
+
+        // Terminal style pulse glow
+        svg {
+            filter: drop-shadow(0 0 12px rgba(0, 255, 102, 0.4));
+            animation: terminal-glow 2s infinite ease-in-out;
+        }
+
+        .brand-title {
+            font-family: "Share Tech Mono", monospace;
+            font-size: 26px;
+            font-weight: 400;
+            color: #00ff66;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            text-shadow: 0 0 10px rgba(0, 255, 102, 0.5);
+            animation: text-pulse 2s infinite ease-in-out;
+        }
+    }
+}
+
+@keyframes terminal-glow {
+    0%, 100% { filter: drop-shadow(0 0 8px rgba(0, 255, 102, 0.3)); }
+    50% { filter: drop-shadow(0 0 20px rgba(0, 255, 102, 0.6)); }
+}
+
+@keyframes text-pulse {
+    0%, 100% { opacity: 0.85; text-shadow: 0 0 6px rgba(0, 255, 102, 0.3); }
+    50% { opacity: 1; text-shadow: 0 0 14px rgba(0, 255, 102, 0.7); }
+}
